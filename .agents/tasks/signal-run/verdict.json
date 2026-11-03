@@ -1,0 +1,28 @@
+{
+  "verdict": "CHANGES_REQUESTED",
+  "summary": "Two confirmed defects prevent the promised consent-cleared Voice Notes handoff from working as documented: Vite serves media from /media, not /public-signal/media, and the ready state allows a cleared audio file with no captions or transcript. The current all-null manifest, claim boundaries, static-asset isolation, and recorded navigation and accessibility checks otherwise match the planned build.",
+  "findings": [
+    {
+      "severity": "major",
+      "file": "src/signal-run/content/media-manifest.js",
+      "line": 7,
+      "issue": "**confirmed** The replacement instruction says to place files under public-signal/media and set source fields to those paths. With vite.config.js publicDir set to public-signal, the build emits dist/media; a ready player following the instruction requests /public-signal/media/... and receives no deployed file.",
+      "required_change": "Keep assets at public-signal/media/... but set audioSrc and captionSrc to /media/<stop>.mp3 and /media/<stop>.vtt. Rewrite the manifest and documentation to distinguish the source directory from browser URLs, then validate an unmodified production ready-media configuration."
+    },
+    {
+      "severity": "major",
+      "file": "src/signal-run/components/VoiceNotes.jsx",
+      "line": 5,
+      "issue": "**confirmed** isReady only requires cleared consent and audioSrc, so a future manifest can publish a recording without captionSrc or transcript despite the source-verification and handoff requirements for both artifacts.",
+      "required_change": "Require non-empty audioSrc, captionSrc, and transcript together with cleared consent before rendering the player. Keep incomplete records in an explicit awaiting-release state and verify that state before publishing media."
+    }
+  ],
+  "verification": [
+    "Recorded npm ci — passed; installed 154 packages and reported 16 dependency audit vulnerabilities.",
+    "Recorded npm run lint — passed with zero warnings and errors for src/main.jsx and src/signal-run.",
+    "Recorded npm run build — passed with Vite 7.3.0; transformed 38 modules and emitted index.html, one CSS bundle, one JavaScript bundle, and the intentional public-signal marker files.",
+    "Recorded npm run preview -- --host 127.0.0.1 --port 4173 --strictPort — served HTTP 200; Chrome checks recorded five hash routes, focus, desktop and 375 px layouts, reduced motion, forced colors, no-JavaScript content, no canvas, no media/autoplay, and no microphone prompt.",
+    "Get-ChildItem dist -Recurse — current output contains dist/media/.gitkeep and no dist/public-signal/media directory, confirming the documented future media URL mismatch.",
+    "No validation command rerun — reviewed all three FEAT records, source verification, game plan, active source, and existing dist output only."
+  ]
+}

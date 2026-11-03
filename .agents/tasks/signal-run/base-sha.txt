@@ -1,0 +1,3 @@
+source: https://github.com/ITomPoland/portfolio-itom
+baseline ref: unverified archive snapshot
+commit SHA: unavailable because the .git metadata was not included

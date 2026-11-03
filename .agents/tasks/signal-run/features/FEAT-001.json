@@ -1,0 +1,27 @@
+{
+  "id": "FEAT-001",
+  "type": "refactor",
+  "description": "Replace the active ITom WebGL/CMS/analytics delivery path with a lean, semantic Signal Run shell. This feature is first because the later evidence trail must not inherit Canvas, texture preload, PostHog, Sanity, autoplay, or protected public assets from src/App.jsx and vite.config.js.",
+  "status": "completed",
+  "steps": [
+    "Edit package.json and regenerate package-lock.json so the root keeps only the React/Vite/ESLint packages needed by the new JavaScript app. Set lint to eslint src/main.jsx src/signal-run --max-warnings=0; retain dev, build, and preview; do not add a test or type-check framework.",
+    "Replace vite.config.js with a React-only Vite configuration and publicDir: 'public-signal'. Remove its Sanity SEO import, /start rewrite middleware, and compression setup; delete seo-plugin.js because it contains stale ITom/Sanity identity and would otherwise require a removed dependency.",
+    "Replace index.html's ITom metadata, external preloads/fonts, hidden crawler copy, and no-script message with Shyam-specific title/description/theme metadata and a meaningful no-JS semantic summary of the five stops, source links, empty Voice Notes, and proposal status. Do not set a fictional canonical URL or social image.",
+    "Replace src/main.jsx's original console signature and App import with a StrictMode render of new src/signal-run/App.jsx. Create a buildable SignalRunApp shell with an accessible skip link, the exact opening line, a plain-language scroll/click/keyboard onboarding panel, an explicit no-WebGL/no-autoplay/no-microphone statement, and a placeholder main landmark for FEAT-002.",
+    "Create public-signal/.gitkeep as the sole new static source directory. Leave the archived public/ directory untouched but unreferenced and outside Vite's production output; preserve LICENSE exactly."
+  ],
+  "acceptance_criteria": [
+    "npm run build starts from src/main.jsx -> src/signal-run/App.jsx and does not import the old src/App.jsx WebGL application, Sanity SEO plugin, or /start static route.",
+    "The built page has Shyam-specific metadata and useful noscript content, while no canonical URL, social image, phone number, credentials, analytics, Canvas, WebGL, or microphone API is introduced.",
+    "The starter's original public/ textures, sounds, images, and fonts are not part of Vite's configured public directory; LICENSE remains unmodified.",
+    "npm run lint checks every new active file under src/signal-run plus src/main.jsx with zero warnings/errors."
+  ],
+  "verification": [
+    "npm ci",
+    "npm run lint",
+    "npm run build",
+    "npm run preview, then open the built home page with JavaScript disabled and confirm the concise Signal Run summary and source links remain useful."
+  ],
+  "blocked_reason": null,
+  "findings": "Planning baseline: the current package installs 416 legacy packages with peer warnings and 62 audit findings; current build passes but bundles 945 modules and a 1.5 MB minified entry; current full-repository lint fails 240 errors/32 warnings. The archive lacks .git, so do not initialize or commit it.\n\nCompleted FEAT-001: replaced the active delivery path with a React/Vite semantic Signal Run shell; reduced root dependencies to active React/Vite/ESLint tooling; regenerated package-lock.json; configured Vite to use only public-signal/; removed the Sanity SEO plugin and /start route handling; replaced ITom metadata and crawler content with Shyam-specific metadata plus a meaningful no-JavaScript summary; and created the dedicated public-signal/.gitkeep directory. The upstream public/ archive and LICENSE were left untouched. The shell includes the required opening line, skip link, plain-language scroll/click/keyboard onboarding, a no-WebGL/no-autoplay/no-microphone statement, and the FEAT-002 placeholder main landmark.\n\nValidation evidence: npm ci passed, installing 154 packages (npm reported 16 dependency audit vulnerabilities); npm run lint passed with zero warnings/errors for src/main.jsx and src/signal-run; npm run build passed with 28 transformed modules and a 194.37 kB minified JavaScript bundle; npm run preview returned HTTP 200 and its static response contained the required no-JavaScript opening line and honest empty Voice Notes notice. No local commit was available because the supplied archive has no .git metadata; Git was not initialized and nothing was pushed. FEAT-001 completion is recorded here for later steps."
+}

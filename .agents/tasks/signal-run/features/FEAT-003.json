@@ -1,0 +1,26 @@
+{
+  "id": "FEAT-003",
+  "type": "feat",
+  "description": "Add the future-ready but initially empty Voice Notes system, user-facing release checklist, and human-only publishing documentation after the evidence trail is stable. This feature deliberately separates real UI/media architecture from authenticity that only Shyam can supply.",
+  "status": "completed",
+  "steps": [
+    "Create src/signal-run/content/media-manifest.js with exactly five awaiting-recording records keyed to the five stops. Each record starts with null audioSrc, captionSrc, and transcript; has a consent/release state; gives future replacement instructions for public-signal/media/<stop>.mp3 and .vtt; and includes one Shyam-only prompt: unsafe-fast Nexus alert, independent A.S.T.R.A. approval, Vayu's plausible-but-wrong output, a durable-system detail that mattered to a person, and a spoken observation that could change the growth-test hypothesis.",
+    "Create VoiceNotes.jsx. Its default is an honest empty state that says no authentic recording is published and nothing auto-plays. When a manifest record is made ready, use an HTML audio element with preload='metadata', explicit accessible Play/Pause and Mute/Unmute controls, media loading/ready/error status in an aria-live region, optional WebVTT track, and a readable transcript disclosure. Never synthesize speech, request microphone permission, call getUserMedia/SpeechRecognition, render a fake waveform, or call the feature an official Wispr Flow integration.",
+    "Create PublishingChecklist.jsx and add Voice Notes/checklist composition to src/signal-run/App.jsx. The visible checklist must require user-written reflections, consent-cleared/redacted photos and screenshots, authentic recordings plus verified captions/transcripts, explicit public-contact choices, source/link review, and manual final Emergent publishing/submission; it must keep phone absent by default. Create public-signal/media/.gitkeep but no actual media files.",
+    "Rewrite README.md for Signal Run and create docs/SIGNAL-RUN.md, docs/VOICE-NOTES.md, and docs/EMERGENT-HANDOFF.md. Document the story, source-status rules, original asset policy, browser capability boundaries, exact local commands, five recording prompts, media replacement steps, affirmative consent requirements, MIT attribution, and the concise human-only Emergent/video/submission handoff."
+  ],
+  "acceptance_criteria": [
+    "All five Voice Notes render an honest awaiting-recording state from the manifest and no audio is generated, fetched, played, or claimed to be Shyam's voice on initial load.",
+    "Changing one consent-cleared manifest item to a real source supports keyboard-accessible play/pause and mute/unmute, transcript/caption disclosure, and truthful loading/error feedback without a microphone prompt.",
+    "The documentation and visible checklist distinguish automated UI implementation from Shyam-only voice, reflection, consent, contact, link review, Emergent publishing, video creation, and submission tasks.",
+    "README and footer preserve MIT starter attribution, state that original ITom personal assets/copy are not used, and neither alter LICENSE nor imply upstream/Wispr/Emergent endorsement."
+  ],
+  "verification": [
+    "npm run lint",
+    "npm run build",
+    "npm run dev, then test every empty Voice Note with mouse and keyboard, confirm no audio/network autoplay and no microphone prompt, temporarily configure a nonexistent ready media URL to confirm the aria-live error state, and confirm transcript disclosure behavior.",
+    "npm run preview, then verify the built footer/README/docs, JavaScript-disabled summary, reduced-motion route, and final human-only publishing checklist."
+  ],
+  "blocked_reason": null,
+  "findings": "Completed FEAT-003. Added five initially empty, consent-gated Voice Notes with no audio element or network media load until a manifest item is explicitly made ready; ready items provide HTML audio metadata preload, keyboard-accessible Play/Pause and Mute/Unmute buttons, aria-live loading/error feedback, optional captions, and transcript disclosure. Added the visible human-only publishing checklist, empty public-signal/media/.gitkeep, Signal Run documentation, recording and media-replacement instructions, and the manual Emergent/video/submission handoff. npm ci completed with 16 reported dependency audit vulnerabilities; npm run lint and npm run build passed. Development and production-preview browser inspection confirmed five awaiting-recording messages, no rendered audio or canvas, the release checklist, attribution, and no-JavaScript summary. A temporary consent-cleared nonexistent media configuration rendered the ready-state controls and transcript disclosure; the final manifest was restored to five null-source records. The archive has no Git repository, so no commit is available. No authentic Shyam recording, media release, public contact opt-in, hosted Emergent URL, or challenge submission credential was supplied or manufactured."
+}

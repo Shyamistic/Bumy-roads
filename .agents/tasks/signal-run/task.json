@@ -1,0 +1,7 @@
+{
+  "task_id": "task-signal-run",
+  "task_description": "Build The Signal Run: Shyam Sharma's evidence-driven, voice-ready Wispr Flow × Emergent Hiring Challenge portfolio as a warm, accessible five-stop editorial signal trail.",
+  "status": "pending",
+  "feature_order": ["FEAT-001", "FEAT-002", "FEAT-003"],
+  "blocked_reason": null
+}
